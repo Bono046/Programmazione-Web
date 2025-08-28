@@ -18,11 +18,13 @@ class DeviceSeeder extends Seeder
         Device::factory()->count(20)->create();
 
 
-
+        
         DeviceModel::insert([
             ['name' => 'BR001'],
             ['name' => 'GL300A'],
             ['name' => 'GL320MG'],
         ]);
+
+        
     }
 }

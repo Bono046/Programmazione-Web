@@ -19,19 +19,32 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         
-        //$this->call(DeviceSeeder::class);
-        //$this->call(RaceSeeder::class);
+        $this->call(DeviceSeeder::class);
+        $this->call(RaceSeeder::class);
         
 
         //User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test',
-            'email' => 'test@gmail.com',
-            'password' => Hash::make('pass')
+            'name' => 'Admin',
+            'email' => 'admin@unisb.it',
+            'password' => Hash::make('pass'),
+            'role' => 'admin',
         ]);
-        
-      
+
+        User::factory()->create([
+            'name' => 'Operator',
+            'email' => 'operator@unibs.it',
+            'password' => Hash::make('password'),
+            'role' => 'operator',
+        ]);
+
+        User::factory()->create([
+            'name' => 'Organization',
+            'email' => 'organization@unibs.it',
+            'password' => Hash::make('password'),
+            'role' => 'organization',
+        ]);
 
     }
 }

@@ -11,7 +11,7 @@
     <!-- Navbar semplice -->
     <nav class="navbar navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand mx-auto" href="#">
+            <a class="navbar-brand mx-auto" href="{{ route('getLogin') }}">
                 Welcome
             </a>
         </div>

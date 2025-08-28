@@ -37,7 +37,7 @@
             </div>
 
             <div>
-                <p class="text-center">First access?  ><!--<a href="">Change password</a></p>  -->
+                <p class="text-center">First access?<a href="{{ route('password.reset') }}">Change password</a></p>
             </div>
 
             <!-- Submit -->

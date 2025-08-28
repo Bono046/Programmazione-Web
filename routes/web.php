@@ -26,10 +26,11 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 
-Route::get('/', [FrontController::class, 'getLogin']);
+Route::get('/', [FrontController::class, 'getLogin'])->name('getLogin');
 
-Route::get('index', [FrontController::class, 'getHome'])->name('home');
+Route::middleware(['auth'])->group(function () {
+    Route::get('index', [FrontController::class, 'getHome'])->name('home');
 
-
-Route::resource('devices', DeviceController::class);
-Route::resource('races', RaceController::class);
+    Route::resource('devices', DeviceController::class);
+    Route::resource('races', RaceController::class);
+});

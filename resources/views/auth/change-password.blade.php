@@ -3,11 +3,13 @@
 @section('title', 'Change Password')
 
 @section('content')
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 70vh;">
-    <div class="card shadow p-4" style="width: 400px;">
+<div class="container container-fluid d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="card shadow p-4" style="width: 400px; margin-top: 20px;">
         <h2 class="text-center mb-4">Cambia Password</h2>
-        <form method="POST" action="{{ route('password.update') }}">
+        <form method="POST" action="{{ route('password.reset') }}">
             @csrf
+            
+          
 
             <!-- Email -->
             <div class="mb-3">
@@ -23,9 +25,10 @@
                 @enderror
             </div>
 
-            <!-- old Password -->
+
+            <!-- Old Password -->
             <div class="mb-3">
-                <label for="old_password" class="form-label">Old Password</label>
+                <label for="old_password" class="form-label">Vecchia Password</label>
                 <input type="password" 
                        class="form-control @error('old_password') is-invalid @enderror" 
                        id="old_password" 
@@ -38,16 +41,26 @@
 
             <!-- New Password -->
             <div class="mb-3">
-                <label for="new_password" class="form-label">New Password</label>
+                <label for="password" class="form-label">Nuova Password</label>
                 <input type="password" 
-                       class="form-control @error('new_password') is-invalid @enderror" 
-                       id="new_password" 
-                       name="new_password" 
+                       class="form-control @error('password') is-invalid @enderror" 
+                       id="password" 
+                       name="password" 
                        required>
-                @error('new_password')
+                @error('password')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
-           
+            </div>
+
+            <!-- Conferma Password -->
+            <div class="mb-3">
+                <label for="password_confirmation" class="form-label">Conferma Password</label>
+                <input type="password" 
+                       class="form-control" 
+                       id="password_confirmation" 
+                       name="password_confirmation" 
+                       required>
+            </div>
 
 
             <!-- Submit -->

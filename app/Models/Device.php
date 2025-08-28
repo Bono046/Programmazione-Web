@@ -9,7 +9,7 @@ class Device extends Model
 {
     use HasFactory; // <-- UTILIZZO DEL TRAIT
 
-    protected $fillable = ['serial', 'imei', 'iccid', 'device_model_id'];
+    protected $fillable = ['serial', 'imei', 'iccid'];
 
 
     public function races()
