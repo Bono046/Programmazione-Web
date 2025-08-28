@@ -8,6 +8,7 @@ use Illuminate\Database\Seeder;
 use App\Models\DeviceModel;
 use App\Models\Device;
 use App\Models\Race;
+use Illuminate\Support\Facades\Hash;
 
 
 class DatabaseSeeder extends Seeder
@@ -22,11 +23,12 @@ class DatabaseSeeder extends Seeder
         //$this->call(RaceSeeder::class);
         
 
-        User::factory(10)->create();
+        //User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Test',
+            'email' => 'test@gmail.com',
+            'password' => Hash::make('pass')
         ]);
         
       

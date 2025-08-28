@@ -17,10 +17,13 @@
             <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLaterale">
                 <i class="bi bi-list" style="font-size: 1.5rem;"></i>
             </button>
-            <a class="navbar-brand mx-auto fw-bold" href="{{ url('/') }}">Home</a>
-            <button class="btn btn-dark">
-                <i class="bi bi-box-arrow-right" style="font-size: 1.5rem;"></i>
-            </button>
+            <a class="navbar-brand mx-auto fw-bold" href="{{ route('home') }}">Home</a>
+            <form method="POST" action="{{ route('logout') }}" >
+                @csrf
+                <button type="submit" class="btn btn-dark" >
+                    <i class="bi bi-box-arrow-right" style="font-size: 1.5rem;"></i>
+                </button>
+            </form>
         </div>
     </nav>
 
@@ -32,7 +35,7 @@
         </div>
         <div class="offcanvas-body">
             <ul class="list-unstyled">
-                <li><a href="{{ url('/') }}" class="text-white text-decoration-none d-block py-2">Home</a></li>
+                <li><a href="{{ route('home') }}" class="text-white text-decoration-none d-block py-2">Home</a></li>
                 <li><a href="{{ route('devices.index') }}" class="text-white text-decoration-none d-block py-2">Dispositivi</a></li>
                 <li><a href="{{ route('races.index') }}" class="text-white text-decoration-none d-block py-2">Gare</a></li>
             </ul>
