@@ -8,16 +8,8 @@
         <h5 class="card-title">{{ $race->name }}</h5>
         <p class="card-text"><strong>Inizio:</strong> {{ $race->start_date->format('d/m/Y') }}</p>
         <p class="card-text"><strong>Fine:</strong> {{ $race->end_date->format('d/m/Y') }}</p>
-        <p class="card-text"><strong>Dispositivi:</strong></p>
-        @if($race->devices->isEmpty())
-            <p class="text-muted">Nessun dispositivo assegnato</p>
-        @else
-            <ul>
-                @foreach($race->devices as $device)
-                    <li>{{ $device->imei }}</li>
-                @endforeach
-            </ul>
-        @endif
+        <p class="card-text"><strong>Descrizione:</strong> {{ $race->description }}</p>
+
     </div>
 </div>
 

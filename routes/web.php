@@ -5,6 +5,7 @@ use App\Http\Controllers\FrontController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\RaceController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 Route::get('/', function () {
@@ -34,4 +35,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('devices', DeviceController::class);
     Route::resource('races', RaceController::class);
+    Route::get('races/{race}/manage', [RaceController::class, 'manage'])->name('races.manage');
+    Route::post('races/{race}/devices', [RaceController::class, 'updateDevices'])->name('races.updateDevices');
+
 });
+
+Route::middleware(['auth', 'isAdmin'])->group(function () {
+    Route::resource('users', UserController::class)->middleware('prevent.admin.edit');
+});
+

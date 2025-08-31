@@ -13,20 +13,21 @@
     </div>
 @endif
 
+
 <form action="{{ $isEdit ? route('devices.update', $device) : route('devices.store') }}" method="POST">
     @csrf
     @if($isEdit)
         @method('PUT')
     @endif
 
-    <div class="mb-3 col-md-6">
-        <label for="serial" class="form-label">Serial</label>
-        <input type="text" name="serial" id="serial" class="form-control" value="{{ old('serial', $device->serial ?? '') }}" required>
+     <div class="mb-3 col-md-6">
+        <label for="imei" class="form-label">IMEI</label>
+        <input type="text" name="imei" id="imei" class="form-control" value="{{ old('imei', $device->imei ?? '') }}" required>
     </div>
 
     <div class="mb-3 col-md-6">
-        <label for="imei" class="form-label">IMEI</label>
-        <input type="text" name="imei" id="imei" class="form-control" value="{{ old('imei', $device->imei ?? '') }}">
+        <label for="serial" class="form-label">Serial</label>
+        <input type="text" name="serial" id="serial" class="form-control" value="{{ old('serial', $device->serial ?? '') }}" >
     </div>
 
     <div class="mb-3 col-md-6">
@@ -34,24 +35,28 @@
         <input type="text" name="iccid" id="iccid" class="form-control" value="{{ old('iccid', $device->iccid ?? '') }}">
     </div>
 
-    <div class="mb-3 col-md-6 d-flex align-items-end" style="gap: 1rem;">
-        <div style="flex:1;">
-            <label for="device_model_id" class="form-label ">Modello</label>
-            <select class="form-select" name="device_model_id" id="device_model_id">
-                <option value="">-- Seleziona Modello --</option>
-                @foreach($deviceModels as $model)
-                    <option value="{{ $model->id }}" data-category="{{ $model->category }}" {{ old('device_model_id', $device->device_model_id ?? '') == $model->id ? 'selected' : '' }}>
-                        {{ $model->name }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-        <div id="category-checkbox-container" style="display:none; white-space:nowrap; align-items: end;">
-            <div class="form-check d-flex align-items-center">
-                <input class="form-check-input" type="checkbox" name="device_model_category_flag" id="device_model_category_flag" style="margin-right: 0.5rem;">
-                <label class="form-check-label mb-0" for="device_model_category_flag">
-                    <span id="category-label" style="font-weight: 500;"></span>
-                </label>
+    <div class="row">
+        <div class="mb-3 d-flex align-items-end" style="gap: 1rem;">
+            <div class="col-md-6", style="flex:1;">
+                <label for="device_model_id" class="form-label ">Modello</label>
+                <select class="form-select" name="device_model_id" id="device_model_id" required>
+                    <option value="">-- Seleziona Modello --</option>
+                    @foreach($deviceModels as $model)
+                        <option value="{{ $model->id }}" data-category="{{ $model->category }}" {{ old('device_model_id', $device->device_model_id ?? '') == $model->id ? 'selected' : '' }}>
+                            {{ $model->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-6">
+                <div id="category-checkbox-container" style="display:none; white-space:nowrap; align-items: end;">
+                    <div class="form-check d-flex align-items-center">
+                        <input class="form-check-input" type="checkbox" name="device_model_category_flag" id="device_model_category_flag" style="margin-right: 0.5rem;">
+                        <label class="form-check-label mb-0" for="device_model_category_flag">
+                            <span id="category-label" style="font-weight: 500;"></span>
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -62,7 +67,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const modelSelect = document.getElementById('device_model_id');
+    const modelSelected = document.getElementById('device_model_id');
     const checkboxContainer = document.getElementById('category-checkbox-container');
     const categoryFlag = document.getElementById('device_model_category_flag');
     const categoryLabel = document.getElementById('category-label');
@@ -71,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const deviceCategory = @json($device->category ?? null);
 
     function handleModelChange() {
-        const modelId = modelSelect.value;
+        const modelId = modelSelected.value;
         if (modelId && modelCategories[modelId]) {
             checkboxContainer.style.display = '';
             categoryLabel.textContent = modelCategories[modelId];
@@ -88,11 +93,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    modelSelect.addEventListener('change', handleModelChange);
+    modelSelected.addEventListener('change', handleModelChange);
     handleModelChange();
 
     document.querySelector('form').addEventListener('submit', function(e) {
-        const modelId = modelSelect.value;
+        const modelId = modelSelected.value;
         if (modelId && modelCategories[modelId] && categoryFlag.checked) {
             let hidden = document.createElement('input');
             hidden.type = 'hidden';

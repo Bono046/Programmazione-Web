@@ -25,6 +25,15 @@ class DeviceSeeder extends Seeder
             ['name' => 'GL320MG', 'category' => 'Bat ext'],
         ]);
 
-        
+
+        $deviceModels = DeviceModel::all();
+
+        Device::all()->each(function ($device) use ($deviceModels) {
+            $model = $deviceModels->random();
+            $device->device_model_id = $model->id;
+            $device->category = rand(0, 1) === 1 ? $model->category : null;
+            $device->save();
+        });
+
     }
 }

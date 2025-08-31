@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Progetto Web')</title>
+
+     <!-- jQuery e plugin JavaScript  -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="{{ url('/') }}/js/bootstrap.min.js"></script>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Icone Bootstrap -->
@@ -18,6 +24,11 @@
                 <i class="bi bi-list" style="font-size: 1.5rem;"></i>
             </button>
             <a class="navbar-brand mx-auto fw-bold" href="{{ route('home') }}">Home</a>
+            @if(auth()->check())
+                <span class="navbar-text text-white mx-3">
+                    {{ auth()->user()->name }}
+                </span>
+            @endif
             <form method="POST" action="{{ route('logout') }}" >
                 @csrf
                 <button type="submit" class="btn btn-dark" >
@@ -28,16 +39,41 @@
     </nav>
 
     <!-- Offcanvas Menu -->
-    <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="menuLaterale">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title">Menu</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    <style>
+
+    </style>
+    <div class="offcanvas offcanvas-start bg-dark text-white shadow" tabindex="-1" id="menuLaterale">
+        <div class="offcanvas-header border-bottom border-secondary">
+            <h5 class="offcanvas-title fw-semibold">Menu</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Chiudi"></button>
         </div>
-        <div class="offcanvas-body">
-            <ul class="list-unstyled">
-                <li><a href="{{ route('home') }}" class="text-white text-decoration-none d-block py-2">Home</a></li>
-                <li><a href="{{ route('devices.index') }}" class="text-white text-decoration-none d-block py-2">Dispositivi</a></li>
-                <li><a href="{{ route('races.index') }}" class="text-white text-decoration-none d-block py-2">Gare</a></li>
+        <div class="offcanvas-body px-0">
+            <ul class="list-group list-group-flush">
+                <li>
+                    <a href="{{ route('home') }}" class="list-group-item list-group-item-action bg-dark text-white border-0 ps-4 custom-list-group-item">
+                        <i class="bi bi-house-door me-2"></i> Home
+                    </a>
+                </li>
+                <hr class="custom-divider">
+                <li>
+                    <a href="{{ route('devices.index') }}" class="list-group-item list-group-item-action bg-dark text-white border-0 ps-4 custom-list-group-item">
+                        <i class="bi bi-phone me-2"></i> Dispositivi
+                    </a>
+                </li>
+                <hr class="custom-divider">
+                <li>
+                    <a href="{{ route('races.index') }}" class="list-group-item list-group-item-action bg-dark text-white border-0 ps-4 custom-list-group-item">
+                        <i class="bi bi-flag me-2"></i> Gare
+                    </a>
+                </li>
+                @if(auth()->check() && auth()->user()->role === 'admin')
+                <hr class="custom-divider">
+                <li>
+                    <a href="{{ route('users.index') }}" class="list-group-item list-group-item-action bg-dark text-white border-0 ps-4 custom-list-group-item">
+                        <i class="bi bi-people me-2"></i> Utenti
+                    </a>
+                </li>
+                @endif
             </ul>
         </div>
     </div>

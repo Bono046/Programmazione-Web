@@ -16,7 +16,7 @@
             <th>Nome</th>
             <th>Inizio</th>
             <th>Fine</th>
-            <th>Dispositivi</th>
+            <th>Descrizione</th>
         </tr>
     </thead>
     <tbody>
@@ -25,19 +25,10 @@
                 <td>{{ $race->name }}</td>
                 <td>{{ $race->start_date->format('d/m/Y') }}</td>
                 <td>{{ $race->end_date->format('d/m/Y') }}</td>
-                <td>
-                    @if($race->devices->isEmpty())
-                        <span class="text-muted">Nessun dispositivo</span>
-                    @else
-                        <ul class="mb-0">
-                            @foreach($race->devices as $device)
-                                <li>{{ $device->imei }}</li>
-                            @endforeach
-                        </ul>
-                    @endif
-                </td>
+                <td>{{ $race->description }}</td>
                 <td>
                     <a href="{{ route('races.show', $race) }}" class="btn btn-sm btn-info">Dettagli</a>
+                    <a href="{{ route('races.manage', $race) }}" class="btn btn-sm btn-secondary">Gestisci</a>
                     <a href="{{ route('races.edit', $race) }}" class="btn btn-sm btn-warning">Modifica</a>
                     <form action="{{ route('races.destroy', $race) }}" method="POST" class="d-inline">
                         @csrf

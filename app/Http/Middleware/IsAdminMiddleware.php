@@ -17,7 +17,7 @@ class IsAdminMiddleware
     {
         if (!auth()->check() || auth()->user()->role != 'admin') 
         {
-            return response()->view('getLogin', ['message' => 'Accesso negato. Sei autorizzato solo come admin.']);
+            return response()->view('errors.403', ['message' => 'Accesso negato. Sei autorizzato solo come admin.']);
         }
         return $next($request);
     }

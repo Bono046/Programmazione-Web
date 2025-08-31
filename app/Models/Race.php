@@ -9,7 +9,7 @@ class Race extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'start_date', 'end_date'];
+    protected $fillable = ['name', 'start_date', 'end_date', 'description'];
     protected $casts = ['start_date' => 'date', 'end_date' => 'date']; // comodo per le date
 
 

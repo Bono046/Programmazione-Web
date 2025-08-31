@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name'); // nome gara (opzionale ma utile)
             $table->date('start_date');
             $table->date('end_date');
+            $table->text('description')->nullable(); // nuova colonna per la descrizione
             $table->timestamps();
 });
 

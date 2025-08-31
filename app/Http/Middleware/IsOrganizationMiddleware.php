@@ -15,6 +15,10 @@ class IsOrganizationMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (!auth()->check() || auth()->user()->role != 'organization') 
+        {
+            return response()->view('getLogin', ['message' => 'Accesso negato. Sei autorizzato solo come organizzazione.']);
+        }
         return $next($request);
     }
 }
