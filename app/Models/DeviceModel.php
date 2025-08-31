@@ -9,10 +9,17 @@ class DeviceModel extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'category'];
 
     public function devices()
     {
         return $this->hasMany(Device::class);
+    }
+
+    
+    public static function getCategoryById($id)
+    {
+        $model = self::find($id);
+        return $model ? $model->category : null;
     }
 }

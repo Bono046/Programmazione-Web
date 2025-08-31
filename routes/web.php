@@ -31,6 +31,7 @@ Route::get('/', [FrontController::class, 'getLogin'])->name('getLogin');
 Route::middleware(['auth'])->group(function () {
     Route::get('index', [FrontController::class, 'getHome'])->name('home');
 
+
     Route::resource('devices', DeviceController::class);
     Route::resource('races', RaceController::class);
 });

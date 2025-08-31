@@ -10,6 +10,7 @@ use App\Models\DeviceModel;
 
 class DeviceController extends Controller
 {
+  
     // Mostra tutti i dispositivi
     public function index()
     {
@@ -22,7 +23,10 @@ class DeviceController extends Controller
     public function create()
     {
         $deviceModels = DeviceModel::all();
-        return view('devices.create', compact('deviceModels'));
+        $modelCategories = $deviceModels->pluck('category', 'id');
+        $device = null;
+        $isEdit = false;
+        return view('devices.form', compact('device', 'deviceModels', 'modelCategories', 'isEdit'));
     }
 
     // Salva un nuovo dispositivo
@@ -35,8 +39,15 @@ class DeviceController extends Controller
             'device_model_id' => 'nullable|exists:device_models,id',
         ]);
 
-        Device::create($request->all());
-
+        $data = $request->only(['imei', 'serial', 'iccid', 'device_model_id']);
+        $data['category'] = null;
+        if ($request->input('device_model_id')) {
+            $deviceModel = DeviceModel::find($request->input('device_model_id'));
+            if ($deviceModel && $deviceModel->category && $request->has('device_model_category_flag')) {
+                $data['category'] = $deviceModel->category;
+            }
+        }
+        Device::create($data);
         return redirect()->route('devices.index')->with('success', 'Device creato con successo!');
     }
 
@@ -50,7 +61,9 @@ class DeviceController extends Controller
     public function edit(Device $device)
     {
         $deviceModels = DeviceModel::all();
-        return view('devices.edit', compact('device', 'deviceModels'));
+        $modelCategories = $deviceModels->pluck('category', 'id');
+        $isEdit = true;
+        return view('devices.form', compact('device', 'deviceModels', 'modelCategories', 'isEdit'));
     }
 
     // Aggiorna un dispositivo
@@ -61,11 +74,17 @@ class DeviceController extends Controller
             'serial' => 'nullable',
             'iccid' => 'nullable',
             'device_model_id' => 'nullable|exists:device_models,id',
-
         ]);
 
-        $device->update($request->all());
-
+        $data = $request->only(['imei', 'serial', 'iccid', 'device_model_id']);
+        $data['category'] = null;
+        if ($request->input('device_model_id')) {
+            $deviceModel = DeviceModel::find($request->input('device_model_id'));
+            if ($deviceModel && $deviceModel->category && $request->has('device_model_category_flag')) {
+                $data['category'] = $deviceModel->category;
+            }
+        }
+        $device->update($data);
         return redirect()->route('devices.index')->with('success', 'Device aggiornato con successo!');
     }
 
@@ -75,4 +94,7 @@ class DeviceController extends Controller
         $device->delete();
         return redirect()->route('devices.index')->with('success', 'Device eliminato!');
     }
+
+
+    
 }

@@ -20,9 +20,9 @@ class DeviceSeeder extends Seeder
 
         
         DeviceModel::insert([
-            ['name' => 'BR001'],
-            ['name' => 'GL300A'],
-            ['name' => 'GL320MG'],
+            ['name' => 'BR001', 'category' => 'Lora'],
+            ['name' => 'GL300A', 'category' => 'Ant ext'],
+            ['name' => 'GL320MG', 'category' => 'Bat ext'],
         ]);
 
         
