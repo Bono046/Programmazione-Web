@@ -13,6 +13,8 @@
     </div>
 @endif
 
+
+
 <form action="{{ isset($race) && $race->exists ? route('races.update', $race) : route('races.store') }}" method="POST">
     @csrf
     @if(isset($race) && $race->exists)
@@ -41,7 +43,11 @@
 
     
 
-    <button type="submit" class="btn btn-success">{{ isset($race) && $race->exists ? 'Aggiorna' : 'Salva' }}</button>
-    <a href="{{ route('races.index') }}" class="btn btn-secondary">Annulla</a>
+    <button type="submit" class="btn btn-success">
+        <i class="bi bi-save"></i> {{ isset($race) && $race->exists ? 'Aggiorna' : 'Salva' }}
+    </button>
+    <a href="{{ route('races.index') }}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Annulla
+    </a>
 </form>
 @endsection

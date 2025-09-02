@@ -95,6 +95,14 @@ class DeviceController extends Controller
         return redirect()->route('devices.index')->with('success', 'Device eliminato!');
     }
 
+     public function confirmDelete(Device $device)
+    {
+        return view('devices.show', compact('device'))->with('confirmDelete', true);
+    }
+
+
+    
+
 
     
 }

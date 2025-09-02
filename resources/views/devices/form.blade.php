@@ -14,6 +14,7 @@
 @endif
 
 
+
 <form action="{{ $isEdit ? route('devices.update', $device) : route('devices.store') }}" method="POST">
     @csrf
     @if($isEdit)
@@ -61,8 +62,12 @@
         </div>
     </div>
 
-    <button type="submit" class="btn btn-success">{{ $isEdit ? 'Aggiorna' : 'Salva' }}</button>
-    <a href="{{ route('devices.index') }}" class="btn btn-secondary">Annulla</a>
+    <button type="submit" class="btn btn-success">
+        <i class="bi bi-save"></i> {{ $isEdit ? 'Aggiorna' : 'Salva' }}
+    </button>
+    <a href="{{ route('devices.index') }}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Annulla
+    </a>
 </form>
 
 <script>

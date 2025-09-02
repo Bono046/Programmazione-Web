@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory; // <-- IMPORT CORRETTO
+use Illuminate\Database\Eloquent\Factories\HasFactory; 
 use Illuminate\Database\Eloquent\Model;
 
 class Device extends Model
 {
-    use HasFactory; // <-- UTILIZZO DEL TRAIT
+    use HasFactory; 
 
     protected $fillable = ['serial', 'imei', 'iccid', 'device_model_id', 'category'];
 

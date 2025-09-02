@@ -12,8 +12,9 @@
     <div class="alert alert-success">{{ session('success') }}</div>
 @endif
 
-<table class="table table-bordered table-striped">
-    <thead>
+<div class="table-responsive">
+ <table class="table table-hover align-middle text-center">
+    <thead class="table-dark">
         <tr>
             <th>ID</th>
             <th>Serial</th>
@@ -34,12 +35,15 @@
 
 
                 <td>
-                        <a href="{{ route('devices.show', $device) }}" class="btn btn-sm btn-info">Dettagli</a>
-                        <a href="{{ route('devices.edit', $device) }}" class="btn btn-sm btn-warning">Modifica</a>
-                        <form action="{{ route('devices.destroy', $device) }}" method="POST" class="d-inline">
+                        <a href="{{ route('devices.show', $device) }}" class="btn btn-sm btn-secondary">
+                            <i class="bi bi-info-circle"></i> Dettagli
+                        </a>
+                        <a href="{{ route('devices.edit', $device) }}" class="btn btn-sm btn-warning">
+                           <i class="bi bi-pencil-square"></i> Modifica</a>
+                        <form action="{{ route('devices.confirmDelete', $device) }}" method="GET" class="d-inline">
                             @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Sei sicuro di voler eliminare questo device?')">Elimina</button>
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="bi bi-trash"></i> Elimina</button>
                     </form>
                 </td>
             </tr>
@@ -50,4 +54,5 @@
         @endforelse
     </tbody>
 </table>
+</div>
 @endsection

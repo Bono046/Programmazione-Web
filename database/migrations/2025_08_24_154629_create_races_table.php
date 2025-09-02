@@ -13,7 +13,7 @@ return new class extends Migration
     {
        Schema::create('races', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // nome gara (opzionale ma utile)
+            $table->string('name')->unique(); 
             $table->date('start_date');
             $table->date('end_date');
             $table->text('description')->nullable(); // nuova colonna per la descrizione

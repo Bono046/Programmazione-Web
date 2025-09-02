@@ -6,6 +6,7 @@ use App\Models\Race;
 use App\Models\Device;
 use App\Models\DeviceModel;
 use Illuminate\Http\Request;
+use App\Models\MissingDevice;
 
 class RaceController extends Controller
 {
@@ -81,14 +82,22 @@ class RaceController extends Controller
         return redirect()->route('races.index')->with('success', 'Gara eliminata correttamente!');
     }
     
-        //$race->load('devices'); // eager load dispositivi
+
+    public function confirmDelete(Race $race)
+    {
+        return view('races.show', compact('race'))->with('confirmDelete', true);
+    }
 
     public function manage(Race $race)
     {
         $models = DeviceModel::all();
         $devices = Device::all();
-        return view('races.manage', compact('race', 'models', 'devices'));
+        $missingDevices = MissingDevice::where('race_id', $race->id)->with('device', 'race')->get();
+        $tab = session('tab', 'partenza');
+        return view('races.manage', compact('race', 'models', 'devices', 'missingDevices', 'tab'));
+
     }
+
 
 
     // Aggiorna solo i dispositivi associati alla gara
@@ -106,8 +115,45 @@ class RaceController extends Controller
         }
 
         return redirect()->route('races.manage', $race)
-            ->with('success', 'Dispositivi aggiornati correttamente!');
+            ->with('success', 'Dispositivi aggiornati correttamente!')
+            ->with('activeTab', 'partenza');
     }
+
+
+    public function markMissing(Request $request, Race $race)
+    {
+        $missingDevices = $request->input('missing', []);
+
+        foreach ($missingDevices as $deviceId) {
+            $missing = MissingDevice::where('race_id', $race->id)
+            ->where('device_id', $deviceId)
+            ->first();
+
+            if ($missing) {
+                $missing->update(['returned' => 0]);
+            } else {
+                MissingDevice::create([
+                    'race_id' => $race->id,
+                    'device_id' => $deviceId,
+                    'returned' => 0,
+                ]);
+            }
+        }
+        return redirect()->route('races.manage', $race)
+            ->with('success', 'Dispositivi mancanti segnalati!')
+            ->with('activeTab', 'rientro');
+    }
+
+
+    public function markReturned(MissingDevice $missingDevice)
+    {
+        $missingDevice->update(['returned' => true]);
+
+        return back()->with('success', 'Dispositivo segnato come rientrato!')
+            ->with('activeTab', 'rientro');
+    }
+
+
 
 
 }

@@ -34,10 +34,19 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::resource('devices', DeviceController::class);
-    Route::resource('races', RaceController::class);
+
+    Route::resource('races', RaceController::class)->only(['index', 'show', 'create']);
+    Route::resource('races', RaceController::class)
+        ->only(['store', 'edit', 'update', 'destroy'])
+        ->middleware('isOrg');
+
     Route::get('races/{race}/manage', [RaceController::class, 'manage'])->name('races.manage');
     Route::post('races/{race}/devices', [RaceController::class, 'updateDevices'])->name('races.updateDevices');
+    Route::post('/races/{race}/missing', [RaceController::class, 'markMissing'])->name('races.markMissing');
+    Route::post('/missing-devices/{missingDevice}/return', [RaceController::class, 'markReturned'])->name('races.markReturned');
 
+    Route::get('/races/{race}/confirm-delete', [RaceController::class, 'confirmDelete'])->name('races.confirmDelete');
+    Route::get('/devices/{device}/confirm-delete', [DeviceController::class, 'confirmDelete'])->name('devices.confirmDelete');
 });
 
 Route::middleware(['auth', 'isAdmin'])->group(function () {

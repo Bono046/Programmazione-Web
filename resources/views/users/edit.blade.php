@@ -49,11 +49,18 @@
         <label class="form-label">Ruolo</label>
         <select name="role" class="form-select">
         @foreach($roles as $role)
-            <option value="{{ $role }}">{{ ucfirst($role) }}</option>
+            <option value="{{ $role }}" {{ (old('role', $user->role ?? '') == $role) ? 'selected' : '' }}>
+            {{ ucfirst($role) }}
+            </option>
         @endforeach
         </select>
     </div>
 
-    <button class="btn btn-success" type="submit">{{ $isEdit ? 'Aggiorna' : 'Salva' }}</button>
+    <button class="btn btn-success" type="submit">
+        <i class="bi bi-save"></i> {{ $isEdit ? 'Aggiorna' : 'Salva' }}
+    </button>
+    <a href="{{ route('users.index') }}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Annulla
+    </a>
 </form>
 @endsection
