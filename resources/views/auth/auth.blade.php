@@ -5,7 +5,7 @@
 @section('content')
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 70vh;">
     <div class="card shadow p-4" style="width: 400px;">
-        <h2 class="text-center mb-4">Accedi</h2>
+        <h2 class="text-center mb-4 bg-dark text-white py-2 rounded">Accedi</h2>
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
@@ -37,7 +37,7 @@
             </div>
 
             <div>
-                <p class="text-center">First access?<a href="{{ route('password.reset') }}">Change password</a></p>
+                <p class="text-center">First access?<a href="{{ route('password.reset') }}"> Change password</a></p>
             </div>
 
             <!-- Submit -->
