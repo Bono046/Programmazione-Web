@@ -29,6 +29,7 @@
                     <li class="list-group-item"><strong>Inizio:</strong> {{ $race->start_date->format('d/m/Y') }}</li>
                     <li class="list-group-item"><strong>Fine:</strong> {{ $race->end_date->format('d/m/Y') }}</li>
                     <li class="list-group-item"><strong>Descrizione:</strong> {{ $race->description }}</li>
+                    <li class="list-group-item"><strong>N. Dispositivi:</strong> {{ $race->devices->count() }}</li>
                 </ul>
                 @if(!empty($confirmDelete))
                     <div class="row g-2">
@@ -50,7 +51,7 @@
                 @else
                     <div class="row g-2">
                         <div class="col-4">
-                            <a href="{{ route('races.manage', $race) }}" class="btn btn-secondary w-100">
+                            <a href="{{ route('races.manage', $race) }}" class="btn btn-info w-100">
                                 <i class="bi bi-gear"></i> Gestisci
                             </a>
                         </div>
@@ -60,9 +61,8 @@
                             </a>
                         </div>
                         <div class="col-4">
-                            <form action="{{ route('races.destroy', $race) }}" method="POST" onsubmit="return confirm('Sei sicuro di voler eliminare questa gara?');">
+                            <form action="{{ route('races.confirmDelete', $race) }}" method="GET">
                                 @csrf
-                                @method('DELETE')
                                 <button type="submit" class="btn btn-danger w-100">
                                     <i class="bi bi-trash"></i> Elimina
                                 </button>

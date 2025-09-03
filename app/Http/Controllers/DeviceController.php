@@ -15,7 +15,8 @@ class DeviceController extends Controller
     public function index()
     {
         $devices = Device::all();
-        return view('devices.index', ['devices' => $devices]);
+        $deviceModels = DeviceModel::all();
+        return view('devices.index', ['devices' => $devices, 'deviceModels' => $deviceModels]);
        // return view('devices.index', compact('devices'));
     }
 
@@ -85,7 +86,7 @@ class DeviceController extends Controller
             }
         }
         $device->update($data);
-        return redirect()->route('devices.index')->with('success', 'Device aggiornato con successo!');
+        return redirect()->route('devices.show', $device)->with('success', 'Device aggiornato con successo!');
     }
 
     // Elimina un dispositivo
@@ -101,7 +102,13 @@ class DeviceController extends Controller
     }
 
 
+    public function getCategory($ModelID)
+    {
+        $deviceModel = DeviceModel::find($ModelID);
+        return response()->json(['category' => $deviceModel ? $deviceModel->category : null]);
+    }
     
+   
 
 
     

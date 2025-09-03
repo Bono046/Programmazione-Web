@@ -17,9 +17,6 @@ class DeviceModel extends Model
     }
 
     
-    public static function getCategoryById($id)
-    {
-        $model = self::find($id);
-        return $model ? $model->category : null;
-    }
+    
+
 }

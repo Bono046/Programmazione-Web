@@ -11,13 +11,19 @@ class RaceSeeder extends Seeder
 {
    public function run()
     {
+        /*
     $race = Race::create([
         'name' => 'Gara Test',
         'start_date' => now(),
         'end_date' => now()->addDays(3),
     ]);
+    */
 
-    $race->devices()->attach(Device::inRandomOrder()->take(5)->pluck('id'));
-    }
+    $races = Race::factory()->count(5)->create();
+
+    $races->each(function ($race) {
+        $race->devices()->attach(Device::inRandomOrder()->take(random_int(10, 20))->pluck('id'));
+    });
+}
 }
 

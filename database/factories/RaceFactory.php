@@ -17,7 +17,9 @@ class RaceFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => 'Rally del ' . $this->faker->state(),
+            'start_date' => $start = $this->faker->dateTimeBetween('now', '+1 month'),
+            'end_date' => (clone $start)->modify('+1 week'),
         ];
     }
 }

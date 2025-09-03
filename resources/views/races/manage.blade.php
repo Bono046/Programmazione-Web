@@ -67,38 +67,35 @@
                 </div>
 
                 <!-- Tabella dispositivi -->
-                <table class="table table-hover table-bordered table-striped" id="devicesTable">
-                    <thead>
-                        <tr>
-                            <th>Seleziona</th>
-                            <th>Seriale</th>
-                            <th>IMEI</th>
-                            <th>ICCID</th>
-                            <th>Modello</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($devices as $device)
-                            <tr data-model="{{ $device->device_model_id }}" style="cursor:pointer;" 
-                                onclick="if(event.target.tagName !== 'INPUT'){ 
-                                            let cb = this.querySelector('input[type=checkbox]'); 
-                                            cb.checked = !cb.checked; 
-                                            cb.dispatchEvent(new Event('change')); }">
-                                <td>
-                                    <input type="checkbox" name="devices[]" value="{{ $device->id }}"
-                                        {{ $race->devices->contains($device->id) ? 'checked' : '' }}>
-                                </td>
-                                <td>{{ $device->serial }}</td>
-                                <td>{{ $device->imei }}</td>
-                                <td>{{ $device->iccid }}</td>
-                                <td>
-                                    {{ $models->firstWhere('id', $device->device_model_id)?->name ?? 'N/A' }}
-                                </td>
+                <div style="max-height: 350px; overflow-y: auto;">
+                    <table class="table table-bordered table-striped mb-0" id="devicesTable">
+                        <thead>
+                            <tr>
+                                <th>Seleziona</th>
+                                <th>Seriale</th>
+                                <th>IMEI</th>
+                                <th>ICCID</th>
+                                <th>Modello</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-
+                        </thead>
+                        <tbody>
+                            @foreach($devices as $device)
+                                <tr data-model="{{ $device->device_model_id }}" style="cursor:pointer;" onclick="if(event.target.tagName !== 'INPUT'){ let cb = this.querySelector('input[type=checkbox]'); cb.checked = !cb.checked; cb.dispatchEvent(new Event('change')); }">
+                                    <td>
+                                        <input type="checkbox" name="devices[]" value="{{ $device->id }}"
+                                            {{ $race->devices->contains($device->id) ? 'checked' : '' }}>
+                                    </td>
+                                    <td>{{ $device->serial }}</td>
+                                    <td>{{ $device->imei }}</td>
+                                    <td>{{ $device->iccid }}</td>
+                                    <td>
+                                        {{ $models->firstWhere('id', $device->device_model_id)?->name ?? 'N/A' }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
                 <div class="mt-3">
                     <button type="submit" class="btn btn-success">Aggiorna Dispositivi</button>
                 </div>

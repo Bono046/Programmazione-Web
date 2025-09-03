@@ -47,6 +47,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/races/{race}/confirm-delete', [RaceController::class, 'confirmDelete'])->name('races.confirmDelete');
     Route::get('/devices/{device}/confirm-delete', [DeviceController::class, 'confirmDelete'])->name('devices.confirmDelete');
+
+    Route::get('/device-models/{id}/category', [App\Http\Controllers\DeviceController::class, 'getCategory'])
+    ->name('device-models.getCategory');
+
+    
+
 });
 
 Route::middleware(['auth', 'isAdmin'])->group(function () {

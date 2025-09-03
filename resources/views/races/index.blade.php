@@ -41,7 +41,6 @@
                             </a>
                             <form action="{{ route('races.confirmDelete', $race) }}" method="GET" class="d-inline">
                                 @csrf
-                
                                 <button type="submit" class="btn btn-sm btn-danger">
                                     <i class="bi bi-trash"></i> Elimina
                                 </button>

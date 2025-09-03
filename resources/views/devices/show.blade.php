@@ -17,6 +17,10 @@
     </div>
 @endif
 
+@if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
 <div class="row g-4">
     <div class="col-12 col-md-6">
         <div class="card shadow-sm border-0 h-100">
@@ -58,9 +62,12 @@
                             </a>
                         </div>
                         <div class="col-6">
-                            <a href="{{ route('devices.index') }}" class="btn btn-secondary w-100">
-                                <i class="bi bi-arrow-left"></i> Torna alla lista
-                            </a>
+                            <form action="{{ route('devices.confirmDelete', $device) }}" method="GET">
+                                @csrf
+                                <button type="submit" class="btn btn-danger w-100">
+                                    <i class="bi bi-trash"></i> Elimina
+                                </button>
+                            </form>
                         </div>
                     </div>
                 @endif
