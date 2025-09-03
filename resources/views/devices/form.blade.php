@@ -61,7 +61,6 @@
         </div>
     </div>
 
-    {{-- Hidden con la categoria attuale del device (solo edit), vuoto in create --}}
     <input type="hidden" id="device_current_category" value="{{ $isEdit ? ($device->category ?? '') : '' }}">
 
     <button type="submit" class="btn btn-success">
@@ -112,12 +111,10 @@ $(function () {
         });
     }
 
-    // Aggiorna quando cambia il modello
     $modelSelect.on("change", function () {
         updateCategory($(this).val());
     });
 
-    // Stato iniziale in edit o se già selezionato
     if ($modelSelect.val()) {
         updateCategory($modelSelect.val());
     } else {
