@@ -74,18 +74,14 @@
 
 
 
+
 <script>
-// Se non usi jQuery, dimmelo e ti passo la versione con fetch.
-// Qui assumo jQuery già caricato (tipico setup con Bootstrap/Laravel).
 $(function () {
     const $modelSelect       = $("#device_model_id");
     const $checkboxContainer = $("#category-checkbox-container");
     const $categoryLabel     = $("#category-label");
     const $categoryCheckbox  = $("#device_model_category_flag");
-    const currentCategory    = $("#device_current_category").val() || "";
-
-    // Template URL sicuro (evita gli %3A): sostituiamo __ID__ a runtime
-    const endpointTemplate = @json(route('device-models.getCategory', ['id' => '__ID__']));
+    const currentCategory    = $("#device_current_category").val();
 
     function resetCategory() {
         $checkboxContainer.hide();
@@ -99,25 +95,13 @@ $(function () {
             return;
         }
 
-        const url = endpointTemplate.replace('__ID__', modelId);
-
         $.ajax({
-            url: url,
-            type: "GET",
-            dataType: "json",
+            url: "/device-models/" + modelId + "/category", type: "GET", dataType: "json",
             success: function (response) {
-                const category = response && response.category ? String(response.category) : "";
-
-                if (category) {
-                    $categoryLabel.text(category);
+                if (response && response.category) {
+                    $categoryLabel.text(response.category);
                     $checkboxContainer.show();
-
-                    // ✓ In edit: flaggato solo se il device è già di quella categoria
-                    if (currentCategory && category === currentCategory) {
-                        $categoryCheckbox.prop("checked", true);
-                    } else {
-                        $categoryCheckbox.prop("checked", false);
-                    }
+                    $categoryCheckbox.prop("checked", response.category === currentCategory);
                 } else {
                     resetCategory();
                 }
@@ -128,12 +112,12 @@ $(function () {
         });
     }
 
-    // Cambio modello
+    // Aggiorna quando cambia il modello
     $modelSelect.on("change", function () {
         updateCategory($(this).val());
     });
 
-    // Stato iniziale (create/edit)
+    // Stato iniziale in edit o se già selezionato
     if ($modelSelect.val()) {
         updateCategory($modelSelect.val());
     } else {
@@ -141,6 +125,5 @@ $(function () {
     }
 });
 </script>
-
 @endsection
 
