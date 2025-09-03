@@ -18,7 +18,7 @@
 @endif
 
 <div class="row g-4">
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-5">
         <div class="card shadow-sm border-0 h-100">
             <div class="card-header bg-dark text-white">
                 <h5 class="mb-0">Informazioni Gara</h5>
@@ -73,7 +73,7 @@
             </div>
         </div>
     </div>
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-7">
         <div class="card shadow-sm border-0 h-100">
             <div class="card-header bg-dark text-white">
                 <h5 class="mb-0">Dispositivi associati</h5>
